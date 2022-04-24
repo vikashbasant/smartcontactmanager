@@ -1,34 +1,21 @@
 package com.smc.controller;
 
-import com.smc.model.Contact;
-import com.smc.model.User;
-import com.smc.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-@RestController
+@Controller
 public class HomeController {
 
-    @Autowired
-    private UserRepository userRepository;
+    @RequestMapping("/home")
+    public String home(Model m) {
+        m.addAttribute ("title", "Home - Smart Contact Manager");
+        return "home";
+    }
 
-    @GetMapping("/test")
-    @ResponseBody
-    public String test(){
-        User user = new User ();
-        user.setName("Viaksh");
-        user.setEmail ("xyz@gmail.com");
-        user.setPassword ("xyz");
-        user.setEnabled (true);
-        user.setImageUrl ("http://www.wallpaper.com");
-        user.setRole ("Admin");
-        user.setAbout ("This is user information");
-
-        userRepository.save (user);
-
-        return "Working";
+    @RequestMapping("/about")
+    public String about(Model m) {
+        m.addAttribute ("title", "About - Smart Contact Manager");
+        return "about";
     }
 }
