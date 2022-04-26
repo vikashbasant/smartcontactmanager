@@ -9,7 +9,12 @@
     <div class="container">
       <div class="row">
         <div class="col-md-6 offset-md-3">
-          <div class="my-card mt-2">
+          <div class="my-card">
+
+            <div th:if="${session.message}" th:classAppend="${session.message.type}" class="alert" role="alert">
+              <p class="text-center" th:text="${session.message.content}"></p>
+              <th:block th:text="${#session.removeAttribute('message')}"></th:block>
+            </div>
 
             <div class="container text-center">
               <img style="width: 80px" src="" alt="" th:src="@{/img/add-user.png}">
@@ -17,18 +22,20 @@
 
             <h1 class="text-center">SignUp Here !!</h1>
 
-            <form action="" th:action="@{/do_register}" method="post">
+            <form action="" th:action="@{/do_register}" method="post" th:object="${user}">
 
               <!-- name field -->
               <div class="mb-3">
                 <label for="name_field" class="form-label">Your Name</label>
 
                 <input type="text"
+                       name="name"
                        class="form-control"
                        id="name_field"
                        aria-describedby="emailHelp"
                        placeholder="Please Enter Here!"
                        required="required"
+                       th:value="${user.name}"
                 >
 
               </div>
@@ -39,11 +46,13 @@
                 <label for="email_field" class="form-label">Your Email</label>
 
                 <input type="email"
+                       name="email"
                        class="form-control"
                        id="email_field"
                        aria-describedby="emailHelp"
                        placeholder="Please Enter Here!"
                        required="required"
+                       th:value="${user.email}"
                 >
 
               </div>
@@ -54,10 +63,12 @@
                 <label for="password_field" class="form-label">Your Password</label>
 
                 <input type="password"
+                       name="password"
                        class="form-control"
                        id="password_field"
                        aria-describedby="emailHelp"
                        placeholder="Please Enter Here!"
+                       th:value="${user.password}"
                        required
                 >
 
@@ -65,7 +76,7 @@
 
               <!-- user about field-->
               <div class="form-group">
-                <textarea placeholder="Enter something yourself" rows="3" class="form-control"></textarea>
+                <textarea name="about" th:value="${user.about}" placeholder="Enter something yourself" rows="3" class="form-control" ></textarea>
               </div>
 
               <!-- terms and condition arguments-->
