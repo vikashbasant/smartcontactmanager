@@ -22,7 +22,7 @@
 
             <h1 class="text-center">SignUp Here !!</h1>
 
-            <form action="" th:action="@{/do_register}" method="post" th:object="${user}">
+            <form novalidate action="" th:action="@{/do_register}" method="post" th:object="${user}">
 
               <!-- name field -->
               <div class="mb-3">
@@ -36,7 +36,14 @@
                        placeholder="Please Enter Here!"
                        required="required"
                        th:value="${user.name}"
+                       th:classappend="${#fields.hasErrors('name') ? 'is-invalid':''}"
                 >
+
+                <div th:each="e : ${#fields.errors('name')}"  th:text="${e}" class="invalid-feedback">
+
+                </div>
+
+
 
               </div>
 
@@ -53,7 +60,11 @@
                        placeholder="Please Enter Here!"
                        required="required"
                        th:value="${user.email}"
+                       th:classappend="${#fields.hasErrors('email') ? 'is-invalid':''}"
                 >
+                <div th:each="e : ${#fields.errors('email')}"  th:text="${e}" class="invalid-feedback">
+
+                </div>
 
               </div>
 
@@ -69,14 +80,19 @@
                        aria-describedby="emailHelp"
                        placeholder="Please Enter Here!"
                        th:value="${user.password}"
+                       th:classappend="${#fields.hasErrors('password') ? 'is-invalid':''}"
                        required
                 >
+
+                <div th:each="e : ${#fields.errors('password')}"  th:text="${e}" class="invalid-feedback">
+
+                </div>
 
               </div>
 
               <!-- user about field-->
               <div class="form-group">
-                <textarea name="about" th:value="${user.about}" placeholder="Enter something yourself" rows="3" class="form-control" ></textarea>
+                <textarea name="about" th:text="${user.about}" placeholder="Enter something yourself" rows="3" class="form-control" ></textarea>
               </div>
 
               <!-- terms and condition arguments-->
