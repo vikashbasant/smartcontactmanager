@@ -28,7 +28,7 @@ public class User {
     private String email;
 
     @NotBlank(message = "Password can't be Blank Must Required!")
-    @Size(min=8, max=15, message = "User password must be in the range of 8-15")
+    @Size(min=5, message = "User password must be in the range of 5-15")
     private String password;
 
     private boolean enabled;
