@@ -13,7 +13,7 @@
                          class="img-fluid" alt="Sample image">
                 </div>
                 <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-                    <form th:action="@{/signin}" action="#" method="post">
+                    <form th:action="@{/dologin}" action="#" method="post">
 
                         <!-- Error Message-->
                         <div th:if="${param.error}" class="text-center alert alert-danger">
@@ -64,24 +64,6 @@
             </div>
         </div>
 
-
-            <!-- Right -->
-            <div>
-                <a href="#!" class="text-white me-4">
-                    <i class="fab fa-facebook-f"></i>
-                </a>
-                <a href="#!" class="text-white me-4">
-                    <i class="fab fa-twitter"></i>
-                </a>
-                <a href="#!" class="text-white me-4">
-                    <i class="fab fa-google"></i>
-                </a>
-                <a href="#!" class="text-white">
-                    <i class="fab fa-linkedin-in"></i>
-                </a>
-            </div>
-            <!-- Right -->
-        </div>
     </section>
 </body>
 </html>
