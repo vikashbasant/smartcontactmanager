@@ -46,8 +46,8 @@ public class HomeController {
         return "signUp";
     }
 
-
-    @RequestMapping("/login")
+    // handler for custom login:
+    @RequestMapping("/signin")
     public String login(Model m) {
         m.addAttribute ("title", "Login - Smart Contact Manager");
         return "login";
