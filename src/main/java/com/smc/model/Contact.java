@@ -1,10 +1,14 @@
 package com.smc.model;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 
-@Data
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Setter
+@Getter
 @Entity
 @Table(name= "CONTACT")
 public class Contact {
