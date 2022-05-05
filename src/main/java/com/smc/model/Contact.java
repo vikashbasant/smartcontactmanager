@@ -23,7 +23,6 @@ public class Contact {
     @Column(length = 1000)
     private String description;
 
-
     @ManyToOne
     private User user;
 

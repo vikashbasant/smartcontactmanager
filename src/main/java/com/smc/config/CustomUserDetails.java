@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+
 @AllArgsConstructor
 public class CustomUserDetails implements UserDetails {
 

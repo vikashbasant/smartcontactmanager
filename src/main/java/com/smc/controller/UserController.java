@@ -1,10 +1,13 @@
 package com.smc.controller;
 
+import com.smc.model.Contact;
 import com.smc.model.User;
 import com.smc.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.security.Principal;
@@ -16,8 +19,9 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
-    @RequestMapping("/index")
-    public String dashboard(Model m, Principal principal){
+    // method for adding common data to response:
+    @ModelAttribute
+    public void addCommentData(Model m, Principal principal){
         String userName = principal.getName ();
         System.out.println ("USERNAME: "+userName);
 
@@ -26,7 +30,24 @@ public class UserController {
         System.out.println ("User"+user);
 
         m.addAttribute ("user", user);
+    }
+
+
+    // dashboard home:
+    @RequestMapping("/index")
+    public String dashboard(Model m, Principal principal){
+
+        m.addAttribute("title", "User Dashboard");
         return "normal/user_dashboard";
 
+    }
+
+
+    // open add form handler:
+    @GetMapping("/add-contact")
+    public String openAddContactForm(Model m){
+        m.addAttribute("title", "Add Contact");
+        m.addAttribute ("contact", new Contact ());
+        return "normal/add_contact";
     }
 }
