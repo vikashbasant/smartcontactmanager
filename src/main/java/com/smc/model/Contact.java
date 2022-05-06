@@ -1,6 +1,9 @@
 package com.smc.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
@@ -21,7 +24,8 @@ public class Contact {
     private String name;
     private String nickName;
     private String email;
-    private String imageUrl;
+
+    private String image;
     private String work;
 
     @Column(length = 1000)

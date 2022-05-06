@@ -4,13 +4,17 @@ import com.smc.model.Contact;
 import com.smc.model.User;
 import com.smc.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.security.Principal;
 
 @Controller
@@ -55,25 +59,51 @@ public class UserController {
 
     // Processing and contact form
     @PostMapping("/process-contact")
-    public String processContact(@ModelAttribute Contact contact, Principal principal){
-        // here we need to find the user:
-        String name = principal.getName ();
+    public String processContact(@ModelAttribute Contact contact, @RequestParam("profileImage") MultipartFile file, Principal principal){
+        try{
+            // here we need to find the user:
+            String name = principal.getName ();
 
-        // then we need to find the user name:
-        User user = userRepository.getUserByUserName (name);
+            // then we need to find the user name:
+            User user = userRepository.getUserByUserName (name);
 
-        // set user:
-        contact.setUser (user);
+            // processing and uploading file...
+            if(file.isEmpty ()){
+                // if the file is empty then try our message
+                System.out.println ("The File is Empty");
+            }else{
+                // upload the file to folder and update the name to contact:
+                contact.setImage(file.getOriginalFilename ());
 
-        // then add into same user:
-        user.getContacts ().add (contact);
-        // now simply save the user:
-        userRepository.save (user);
+                File saveFile = new ClassPathResource ("static/img").getFile ();
 
-        System.out.println ("DATA "+ contact);
+                Path path = Paths.get (saveFile.getAbsolutePath () + File.separator + file.getOriginalFilename ());
 
-        System.out.println ("==========Added to data base==========");
 
+                Files.copy (file.getInputStream (), path, StandardCopyOption.REPLACE_EXISTING);
+
+                System.out.println ("Image is uploaded!");
+            }
+
+            // then add into same user:
+            user.getContacts ().add (contact);
+
+            // set user:
+            contact.setUser (user);
+
+
+            // now simply save the user:
+            userRepository.save (user);
+
+            System.out.println ("DATA "+ contact);
+
+            System.out.println ("==========Added to data base==========");
+
+
+        }catch(Exception e){
+            System.out.println ("ERROR: "+ e.getMessage ());
+            e.printStackTrace ();
+        }
         return "normal/add_contact";
     }
 }
