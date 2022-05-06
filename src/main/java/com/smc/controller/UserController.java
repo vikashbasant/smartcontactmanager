@@ -1,5 +1,6 @@
 package com.smc.controller;
 
+import com.smc.helper.Message;
 import com.smc.model.Contact;
 import com.smc.model.User;
 import com.smc.repository.UserRepository;
@@ -10,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -59,7 +61,7 @@ public class UserController {
 
     // Processing and contact form
     @PostMapping("/process-contact")
-    public String processContact(@ModelAttribute Contact contact, @RequestParam("profileImage") MultipartFile file, Principal principal){
+    public String processContact(@ModelAttribute Contact contact, @RequestParam("profileImage") MultipartFile file, Principal principal, HttpSession session){
         try{
             // here we need to find the user:
             String name = principal.getName ();
@@ -99,10 +101,14 @@ public class UserController {
 
             System.out.println ("==========Added to data base==========");
 
+            // Success Message:
+            session.setAttribute ("message", new Message ("Your Contact is Added! Add More", "success"));
 
         }catch(Exception e){
             System.out.println ("ERROR: "+ e.getMessage ());
             e.printStackTrace ();
+            // Error Message:
+            session.setAttribute ("message", new Message ("Something want wrong!! Please Try Again", "danger"));
         }
         return "normal/add_contact";
     }
