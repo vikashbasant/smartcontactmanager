@@ -96,8 +96,5 @@ public class HomeController {
             return "signUp";
         }
 
-
-
-
     }
 }
