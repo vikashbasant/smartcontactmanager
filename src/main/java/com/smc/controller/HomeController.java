@@ -26,12 +26,14 @@ public class HomeController {
     @Autowired
     private UserRepository userRepository;
 
+    //====================: This is Home Handler:=============================================//
     @RequestMapping("/")
     public String home(Model m) {
         m.addAttribute ("title", "Home - Smart Contact Manager");
         return "home";
     }
 
+    //====================: This is About Handler:==============================================//
     @RequestMapping("/about")
     public String about(Model m) {
         m.addAttribute ("title", "About - Smart Contact Manager");
@@ -39,6 +41,7 @@ public class HomeController {
     }
 
 
+    //====================: This is SingUp Handler:=============================================//
     @RequestMapping("/signup")
     public String singUp(Model m) {
         m.addAttribute ("title", "Register - Smart Contact Manager");
@@ -46,14 +49,14 @@ public class HomeController {
         return "signUp";
     }
 
-    // handler for custom login:
+    //====================: This is Handler for SignIn:==========================================//
     @RequestMapping("/signin")
     public String login(Model m) {
         m.addAttribute ("title", "Login - Smart Contact Manager");
         return "login";
     }
 
-    // this handler for registering user:
+    //==================: This handler for registering user:======================================//
     @RequestMapping(value="/do_register", method= RequestMethod.POST)
     public String registerUser(@Valid @ModelAttribute("user") User user, BindingResult result1, @RequestParam(value = "agreement", defaultValue = "false") boolean agreement, Model m, HttpSession session){
 
@@ -70,6 +73,7 @@ public class HomeController {
                 return "signUp";
             }
 
+            // set default value for some fields:
             user.setRole ("ROLE_USER");
             user.setEnabled (true);
             user.setImageUrl ("Not yet Set the image!");
@@ -86,7 +90,7 @@ public class HomeController {
             m.addAttribute ("user", new User());
 
 
-            session.setAttribute ("message", new Message ("Successfully Registered !! ", "alert-success"));
+            session.setAttribute ("message", new Message ("Successfully Registered!! ", "alert-success"));
             return "signUp";
 
         }catch(Exception e){
